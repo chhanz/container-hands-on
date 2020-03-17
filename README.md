@@ -200,16 +200,139 @@ $ curl 192.168.200.101
 
 # Kubernetes
 ## Hands-on 환경
-
+> Kubernetes Master 3 Node cluster 구성   
+> Kubernetes Worker 2 Node   
+> Kubernetes v1.15.3   
+> Docker v18.09.7   
+   
 ## APP 배포(NodePort)
+* `php-web` Yaml 작성
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: php-web
+  name: php-web
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      run: php-web
+  template:
+    metadata:
+      labels:
+        run: php-web
+    spec:
+      containers:
+      - image: han0495/php-web:v1
+        name: php-web
 
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: php-web
+  name: php-web
+  namespace: default
+spec:
+  clusterIP: 10.233.25.48
+  externalTrafficPolicy: Cluster
+  ports:
+  - nodePort: 30518
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    run: php-web
+  sessionAffinity: None
+  type: NodePort
+```
+* `php-web` 배포
+```bash
+$ kubectl create -f php-web.yaml
+```
+* `php-web' 배포 확인
+```bash
+$ kubectl get all
+```
+* `php-web' 서비스 확인
+
+```bash
+$ curl worker1.example.com:30518
+$ curl worker2.example.com:30518
+```
 # OpenShift
 ## Hands-on 환경
+<img src="/assets/openshift/img/infra.png" style="max-width: 95%; height: auto;">   
+> OpenShift 3 Node cluster 구성   
+> OpenShift Worker 2 Node   
+> OpenShift Worker 2 Node   
+> OpenShift v3.11   
+> Docker v1.13.1   
 
 ## APP 배포(S2I)
 
 ### GIT Source
-
+```bash
+$ oc new-app httpd~https://github.com/chhanz/sample-httpd-example.git
+```
 ### Local Source 
+```bash
+$ git clone https://github.com/chhanz/sample-httpd-example.git
+$ cd sample-httpd-example
+$ vi index.html
 
+## 변경된 Source Build
+$ oc start-build sample-httpd-example --from-dir=./ --commit=v2
+```
 ## Auto-scaling
+* [`Dockerfile`](https://hub.docker.com/r/han0495/hpa-example) sample source
+```Dockerfile
+FROM php:5-apache
+ADD index.php /var/www/html/index.php
+RUN chmod a+rx index.php
+```
+   
+* [`index.php`](https://hub.docker.com/r/han0495/hpa-example) source
+[CPU 부하 유발 source.](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/#run-expose-php-apache-server)   
+```php
+<?php
+  $x = 0.0001;
+  for ($i = 0; $i <= 1000000; $i++) {
+    $x += sqrt($x);
+  }
+  echo "OK!";
+?>
+```
+
+* Build image : [https://hub.docker.com/r/han0495/hpa-example](https://hub.docker.com/r/han0495/hpa-example)   
+
+### APP 배포
+* [`php-apache.yml`]()
+```bash
+$ oc create -f php-apache.yml
+$ oc expose service/php-apache
+```
+
+### HPA(Horizontal Pod Autoscaler) 생성
+```bash
+$ oc autoscale deployment php-apache --cpu-percent=25 --min=1 --max=10
+```
+
+### 부하 발생
+```bash
+$ while true; do wget -q -O- http://php-apache-test-project.apps.chhan.com; done
+```
+* HPA 상태 확인
+```bash
+$ oc get hpa
+```
+* Grafana Dashboard
+<img src="/assets/openshift/img/load1.png" style="max-width: 95%; height: auto;">   
+   
+<img src="/assets/openshift/img/load2.png" style="max-width: 95%; height: auto;">   
+   
+<img src="/assets/openshift/img/load3.png" style="max-width: 95%; height: auto;">   
