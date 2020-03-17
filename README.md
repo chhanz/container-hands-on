@@ -290,14 +290,14 @@ $ vi index.html
 $ oc start-build sample-httpd-example --from-dir=./ --commit=v2
 ```
 ## Auto-scaling
-* [`Dockerfile`](https://hub.docker.com/r/han0495/hpa-example) sample source
+* [`Dockerfile`](/assets/kubernetes/Dockerfile) sample source
 ```Dockerfile
 FROM php:5-apache
 ADD index.php /var/www/html/index.php
 RUN chmod a+rx index.php
 ```
    
-* [`index.php`](https://hub.docker.com/r/han0495/hpa-example) source   
+* [`index.php`](/assets/kubernetes/index.php) source   
 [CPU 부하 유발 source.](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/#run-expose-php-apache-server)   
 ```php
 <?php
