@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: php-web
+  name: php-web
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      run: php-web
+  template:
+    metadata:
+      labels:
+        run: php-web
+    spec:
+      containers:
+      - image: han0495/php-web:v1
+        name: php-web
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: php-web
+  name: php-web
+  namespace: default
+spec:
+  clusterIP: 10.233.25.48
+  externalTrafficPolicy: Cluster
+  ports:
+  - nodePort: 30518
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    run: php-web
+  sessionAffinity: None
+  type: NodePort
