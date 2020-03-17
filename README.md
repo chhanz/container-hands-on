@@ -206,7 +206,7 @@ $ curl 192.168.200.101
 > Docker v18.09.7   
    
 ## APP 배포(NodePort)
-* `php-web` Yaml 작성
+* [`php-web.yaml`](https://raw.githubusercontent.com/chhanz/container-hands-on/develop-v1/assets/kubernetes/php-web.yaml) Yaml 작성
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -254,11 +254,11 @@ spec:
 ```bash
 $ kubectl create -f php-web.yaml
 ```
-* `php-web' 배포 확인
+* `php-web` 배포 확인
 ```bash
 $ kubectl get all
 ```
-* `php-web' 서비스 확인
+* `php-web` 서비스 확인
 
 ```bash
 $ curl worker1.example.com:30518
@@ -267,6 +267,7 @@ $ curl worker2.example.com:30518
 # OpenShift
 ## Hands-on 환경
 <img src="/assets/openshift/img/infra.png" style="max-width: 95%; height: auto;">   
+   
 > OpenShift 3 Node cluster 구성   
 > OpenShift Worker 2 Node   
 > OpenShift Worker 2 Node   
@@ -296,7 +297,7 @@ ADD index.php /var/www/html/index.php
 RUN chmod a+rx index.php
 ```
    
-* [`index.php`](https://hub.docker.com/r/han0495/hpa-example) source
+* [`index.php`](https://hub.docker.com/r/han0495/hpa-example) source   
 [CPU 부하 유발 source.](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/#run-expose-php-apache-server)   
 ```php
 <?php
@@ -311,7 +312,7 @@ RUN chmod a+rx index.php
 * Build image : [https://hub.docker.com/r/han0495/hpa-example](https://hub.docker.com/r/han0495/hpa-example)   
 
 ### APP 배포
-* [`php-apache.yml`]()
+* [`php-apache.yml`](https://raw.githubusercontent.com/chhanz/container-hands-on/develop-v1/assets/openshift/php-apache.yml)
 ```bash
 $ oc create -f php-apache.yml
 $ oc expose service/php-apache
