@@ -56,7 +56,7 @@ $ docker images
    
 ## Build
 > 참고 소스 : [https://github.com/chhanz/docker-swarm-demo](https://github.com/chhanz/docker-swarm-demo)   
-* create [`Dockerfile`](https://raw.githubusercontent.com/chhanz/container-hands-on/develop-v1/assets/Docker/dockerfile/Dockerfile)   
+* create [`Dockerfile`](/assets/Docker/dockerfile/Dockerfile)   
 ```Dockerfile
 FROM php:7.2-apache
 MAINTAINER chhan <cheolhee.han@ibm.com>
@@ -66,14 +66,14 @@ ADD htdocs/index.php /var/www/html/index.php
 EXPOSE 80 
 ```
    
-* create [`index.php`](https://raw.githubusercontent.com/chhanz/container-hands-on/develop-v1/assets/Docker/dockerfile/htdocs/index.php)   
+* create [`index.php`](/assets/Docker/dockerfile/htdocs/index.php)   
 ```console
 ├── Dockerfile
 └── htdocs
     └── index.php
 ```
    
-* [`index.php`](https://raw.githubusercontent.com/chhanz/container-hands-on/develop-v1/assets/Docker/dockerfile/htdocs/index.php)     
+* [`index.php`](/assets/Docker/dockerfile/htdocs/index.php)     
 ```php
 <html>
 <head><title>chhan sample page</title></head>
@@ -206,7 +206,7 @@ $ curl 192.168.200.101
 > Docker v18.09.7   
    
 ## APP 배포(NodePort)
-* [`php-web.yaml`](https://raw.githubusercontent.com/chhanz/container-hands-on/develop-v1/assets/kubernetes/php-web.yaml) Yaml 작성
+* [`php-web.yaml`](/assets/kubernetes/php-web.yaml) Yaml 작성
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -312,7 +312,7 @@ RUN chmod a+rx index.php
 * Build image : [https://hub.docker.com/r/han0495/hpa-example](https://hub.docker.com/r/han0495/hpa-example)   
 
 ### APP 배포
-* [`php-apache.yml`](https://raw.githubusercontent.com/chhanz/container-hands-on/develop-v1/assets/openshift/php-apache.yml)
+* [`php-apache.yml`](/assets/openshift/php-apache.yml)
 ```bash
 $ oc create -f php-apache.yml
 $ oc expose service/php-apache
