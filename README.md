@@ -270,7 +270,7 @@ $ curl worker2.example.com:30518
    
 > OpenShift 3 Node cluster 구성   
 > OpenShift Worker 2 Node   
-> OpenShift Worker 2 Node   
+> OpenShift Infra 2 Node   
 > OpenShift v3.11   
 > Docker v1.13.1   
 
