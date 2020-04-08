@@ -202,7 +202,7 @@ $ curl 192.168.200.101
 ## Hands-on 환경
 > Kubernetes Master 3 Node cluster 구성   
 > Kubernetes Worker 2 Node   
-> Kubernetes v1.15.3   
+> Kubernetes v1.16.8   
 > Docker v18.09.7   
    
 ## APP 배포(NodePort)
