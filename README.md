@@ -289,6 +289,7 @@ $ kubectl drain worker2.example.com
 ### GIT Source
 ```bash
 $ oc new-app httpd~https://github.com/chhanz/sample-httpd-example.git
+$ oc expose service sample-httpd-example
 ```
 ### Local Source 
 ```bash
