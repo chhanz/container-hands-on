@@ -264,6 +264,16 @@ $ kubectl get all
 $ curl worker1.example.com:30518
 $ curl worker2.example.com:30518
 ```
+## Kubernetes-dashboard 둘러보기
+```bash
+$ kubectl get all -l k8s-app=kubernetes-dashboard -A
+```
+   
+## Kubernetes Node 장애 시나리오
+```bash
+$ kubectl drain worker2.example.com
+```
+   
 # OpenShift
 ## Hands-on 환경
 <img src="/assets/openshift/img/infra.png" style="max-width: 95%; height: auto;">   
